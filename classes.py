@@ -62,3 +62,33 @@ class Bank:
         foundAcc = 0
         
         
+class Account:
+    
+    def __init__(self,accNum,holderName, intrest, balance):
+        
+        self._accountNumber = accNum
+        self._accountHolderName = holderName
+        self._intrestRate = intrest
+        self.accountBalance = balance
+        
+    def getAccountNum(self):
+        return self._accountNumber
+    
+    def getAccountHolderName(self):
+        return self._accountHolderName
+    
+    def setAccountHolderName(self,newName):
+        self._accountHolderName = newName
+    
+    def getIntrestRate(self):
+        return self._intrestRate
+    
+    def setInterstRate(self,newIntrest):
+        self._intrestRate = newIntrest
+        
+    def deposit(self, depositNum):
+        return self.accountBalance + depositNum
+    
+    def withdraw(self,withdrawNum):
+        return self.accountBalance - withdrawNum
+    
