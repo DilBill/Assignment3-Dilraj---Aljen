@@ -47,3 +47,10 @@ class Application:
     def run():
         Application.showMainMenu()
         
+
+class Bank:
+    
+    def __init__(self, name):
+        self._bankName = name
+        
+        
