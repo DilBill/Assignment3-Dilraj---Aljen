@@ -92,3 +92,20 @@ class Account:
     def withdraw(self,withdrawNum):
         return self.accountBalance - withdrawNum
     
+class savingAccount:
+    
+    def __init__(self,minBalance):
+        self._minimumBalance = minBalance
+        
+    def withdraw(self, withdrawNum):
+        return self.minimumBalance - withdrawNum
+    
+class chequingAccount:
+    
+    def __init__(self,overDraft):
+        self._overDraftLimit = overDraft 
+        
+    def withdraw(self, withdrawNum):
+        return self.overDraftLimit - withdrawNum
+        
+    
