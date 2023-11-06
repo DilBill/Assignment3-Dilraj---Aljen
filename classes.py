@@ -53,4 +53,12 @@ class Bank:
     def __init__(self, name):
         self._bankName = name
         
+    def openAccount(self):
+        # open a new account
+        newAcc = 0
+        
+    def searchAccount(self):
+        # search for an account in the bank
+        foundAcc = 0
+        
         
