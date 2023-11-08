@@ -1,3 +1,4 @@
+import random
 class Application:
     
     def showMainMenu():
@@ -8,6 +9,8 @@ class Application:
             
             if selected == 1:
                 accNum = input("Enter Account Number: ")
+                if Bank.searchAccount(accNum):
+                    print("account found \nPlease wait")
             
             elif selected == 2:
                 # call account class
@@ -53,18 +56,34 @@ class Bank:
     def __init__(self, name):
         self._bankName = name
         
+        accounts = []
+        acc1 = Account(1000, "Jim", 0.1, 5000)
+        accounts.append(acc1)
+        acc2 = Account(1010, "carl", 0.2, 65000)
+        accounts.append(acc2)
+        acc3 = Account(1019, "tony", 0.25, 78550)
+        accounts.append(acc3)
+        
+
     def openAccount(self):
         # open a new account
-        newAcc = 0
+        accNum = random.randint(1000,100000)
+        name = input("Please provide the name for the account")
+        balance = 0
+        intrest = 0.1
+        newAcc = Account(accNum, name, intrest, balance)
+    
+        
         
     def searchAccount(self):
         # search for an account in the bank
+        
         foundAcc = 0
         
         
 class Account:
     
-    def __init__(self,accNum,holderName, intrest, balance):
+    def __init__(self,accNum, holderName, intrest, balance):
         
         self._accountNumber = accNum
         self._accountHolderName = holderName
