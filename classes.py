@@ -5,20 +5,18 @@ class Application:
         
         while True:
             
-            selected = int(input(f"What Would You Like To Do?\nSelect Account: 1\nOpen Account: 2\nExit: 3"))
+            selected = int(input(f"What Would You Like To Do?\nSelect Account: 1\nOpen Account: 2\nExit: 3\n"))
             
             if selected == 1:
                 accNum = input("Enter Account Number: ")
-                if Bank.searchAccount(accNum):
-                    print("account found \nPlease wait")
+                bank.searchAccount(accNum)
             
             elif selected == 2:
                 # call account class
-                account = 0
-            
+                bank.openAccount()
             elif selected == 3:
                 # leave main menu
-                mainMenu = 0
+                break
                 
             elif selected != 1 or selected != 2 or selected != 3:
                 print("Invaild Option Try Again")    
@@ -55,35 +53,45 @@ class Bank:
     
     def __init__(self, name):
         self._bankName = name
+        self.allAccounts = []
         
-        accounts = []
-        acc1 = Account(1000, "Jim", 0.1, 5000)
-        accounts.append(acc1)
-        acc2 = Account(1010, "carl", 0.2, 65000)
-        accounts.append(acc2)
-        acc3 = Account(1019, "tony", 0.25, 78550)
-        accounts.append(acc3)
+    def accounts(self):
+        acc1 = Account(1000, "Aljen", 0.1, 75000)
+        acc2 = Account(1010, "Raj", 0.1, 65000)
+        acc3 = Account(1100, "Connor", 0.1, 70000)
+        self.allAccounts.append(acc1)
+        self.allAccounts.append(acc2)
+        self.allAccounts.append(acc3)
         
-
     def openAccount(self):
         # open a new account
-        accNum = random.randint(1000,100000)
-        name = input("Please provide the name for the account")
-        balance = 0
-        intrest = 0.1
-        newAcc = Account(accNum, name, intrest, balance)
-    
+        accId = random.randint(1111,99999)
+        name = input("Please Provide A Name For The Account")
+        balance = int(input("How Much Do You want To Depsoit Into The Account?  \nPlease Enter A Numeric Value No characters or symbols"))
+        newAcc = Account(accId, name, 0.1, balance)
+        self.allAccounts.append(newAcc)
         
-        
-    def searchAccount(self):
+    def searchAccount(self, accNum):
         # search for an account in the bank
+        for a in self.allAccounts:
+            idx = 0
+            acc = self.allAccounts[idx]
+            commaIdx = acc.find(",")
+            if accNum == acc[commaIdx:]:
+                print("Account found \nplease wait")
+                return True
+            else:
+                idx += 1
+                
+        print(f"No account found related to {accNum}")       
+        return False
         
-        foundAcc = 0
+        
         
         
 class Account:
     
-    def __init__(self,accNum, holderName, intrest, balance):
+    def __init__(self,accNum,holderName, intrest, balance):
         
         self._accountNumber = accNum
         self._accountHolderName = holderName
@@ -111,13 +119,22 @@ class Account:
     def withdraw(self,withdrawNum):
         return self.accountBalance - withdrawNum
     
+    def getCurrentBalance(self):
+        return self.accountBalance
+    
+    
 class savingAccount:
     
     def __init__(self,minBalance):
         self._minimumBalance = minBalance
         
     def withdraw(self, withdrawNum):
-        return self.minimumBalance - withdrawNum
+        if Account.getCurrentBalance() - withdrawNum < self._minimumBalance:
+            print("Sorry! You cannot withdraw that amount")
+            
+        else:
+            Account.withdraw(withdrawNum)
+            print("transication complete")
     
 class chequingAccount:
     
@@ -125,6 +142,14 @@ class chequingAccount:
         self._overDraftLimit = overDraft 
         
     def withdraw(self, withdrawNum):
-        return self.overDraftLimit - withdrawNum
+        if (Account.getCurrentBalance() + self._overDraftLimit) - withdrawNum < 0:
+            print("Sorry! You do not have enough money in your account to cover this transaction.")
         
-    
+        else:
+            Account.withdraw(withdrawNum)
+            print("Transaction Complete")
+            
+
+bank = Bank("RAJ'S BANK")
+bank.accounts()
+Application.run()
