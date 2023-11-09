@@ -8,7 +8,7 @@ class Application:
             selected = int(input(f"What Would You Like To Do?\nSelect Account: 1\nOpen Account: 2\nExit: 3\n"))
             
             if selected == 1:
-                accNum = input("Enter Account Number: ")
+                accNum = str(input("Enter Account Number: "))
                 bank.searchAccount(accNum)
             
             elif selected == 2:
@@ -59,9 +59,9 @@ class Bank:
         acc1 = Account(1000, "Aljen", 0.1, 75000)
         acc2 = Account(1010, "Raj", 0.1, 65000)
         acc3 = Account(1100, "Connor", 0.1, 70000)
-        self.allAccounts.append(acc1)
-        self.allAccounts.append(acc2)
-        self.allAccounts.append(acc3)
+        self.allAccounts.append(acc1.toStr())
+        self.allAccounts.append(acc2.toStr())
+        self.allAccounts.append(acc3.toStr())
         
     def openAccount(self):
         # open a new account
@@ -75,9 +75,9 @@ class Bank:
         # search for an account in the bank
         for a in self.allAccounts:
             idx = 0
-            acc = self.allAccounts[idx]
+            acc = a
             commaIdx = acc.find(",")
-            if accNum == acc[commaIdx:]:
+            if accNum == acc[:commaIdx]:
                 print("Account found \nplease wait")
                 return True
             else:
@@ -96,7 +96,7 @@ class Account:
         self._accountNumber = accNum
         self._accountHolderName = holderName
         self._intrestRate = intrest
-        self.accountBalance = balance
+        self._accountBalance = balance
         
     def getAccountNum(self):
         return self._accountNumber
@@ -122,6 +122,8 @@ class Account:
     def getCurrentBalance(self):
         return self.accountBalance
     
+    def toStr(self):
+        return f"{self._accountNumber}, {self._accountHolderName}, {self._intrestRate}, {self._accountBalance}"
     
 class savingAccount:
     
