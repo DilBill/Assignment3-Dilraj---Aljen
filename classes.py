@@ -10,6 +10,7 @@ class Application:
             if selected == 1:
                 accNum = str(input("Enter Account Number: "))
                 bank.searchAccount(accNum)
+                Application.showAccountMenu()
             
             elif selected == 2:
                 # call account class
