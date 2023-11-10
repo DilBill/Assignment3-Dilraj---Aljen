@@ -9,8 +9,12 @@ class Application:
             
             if selected == 1:
                 accNum = str(input("Enter Account Number: "))
-                bank.searchAccount(accNum)
-                Application.showAccountMenu()
+                accFound = bank.searchAccount(accNum)
+                if accFound == False:
+                    print(f"No account found related to {accNum}")       
+                else:
+                    print("Account Found\nPlease Wait")
+                    Application.showAccountMenu(accFound)
             
             elif selected == 2:
                 # call account class
@@ -22,7 +26,7 @@ class Application:
             elif selected != 1 or selected != 2 or selected != 3:
                 print("Invaild Option Try Again")    
                 
-    def showAccountMenu():
+    def showAccountMenu(accIdx):
         
         while True:
             
@@ -30,18 +34,21 @@ class Application:
             
             if selected == 1:
                 # check account balance
-                balance = 0
+                if accIdx == 1:
+                    print("Checking Balance...")
+                    
             
             elif selected == 2:
                 # deposit money
-                depositamount = 0
+                depositNum = input("Enter The Amount Of Money That You Would Like To Deposit:")
+                Account.deposit(depositNum)
             
             elif selected == 3:
             # withdraw money
-                withdrawamount = 0
+                withdrawNum = input("Enter How Much Money You Would Like To Take Out:")
             elif selected == 4:
                 # leave main menu
-                mainMenu = 0
+                break
                 
             elif selected != 1 or selected != 2 or selected != 3 or selected != 4:
                 print("Invaild Option Try Again")
@@ -70,7 +77,7 @@ class Bank:
         name = input("Please Provide A Name For The Account")
         balance = int(input("How Much Do You want To Depsoit Into The Account?  \nPlease Enter A Numeric Value No characters or symbols"))
         newAcc = Account(accId, name, 0.1, balance)
-        self.allAccounts.append(newAcc)
+        self.allAccounts.append(newAcc.toStr())
         
     def searchAccount(self, accNum):
         # search for an account in the bank
@@ -79,12 +86,11 @@ class Bank:
             acc = a
             commaIdx = acc.find(",")
             if accNum == acc[:commaIdx]:
-                print("Account found \nplease wait")
-                return True
+                return idx + 1
             else:
                 idx += 1
                 
-        print(f"No account found related to {accNum}")       
+      
         return False
         
         
