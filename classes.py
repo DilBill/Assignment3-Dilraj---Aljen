@@ -14,7 +14,7 @@ class Application:
                     print(f"No account found related to {accNum}")       
                 else:
                     print("Account Found\nPlease Wait")
-                    Application.showAccountMenu(accFound)
+                    Application.showAccountMenu(bank,accFound)
             
             elif selected == 2:
                 # call account class
@@ -26,17 +26,20 @@ class Application:
             elif selected != 1 or selected != 2 or selected != 3:
                 print("Invaild Option Try Again")    
                 
-    def showAccountMenu(accIdx):
+    def showAccountMenu(Bank, accIdx):
         
         while True:
             
-            selected = int(input(f"What Would You Like To Do?\nCheck Balance: 1\nDeposit: 2\nWithdraw: 3\nExit: 4"))
+
+            selected = int(input(f"What Would You Like To Do?\nCheck Balance: 1\nDeposit: 2\nWithdraw: 3\nExit: 4\n"))
             
             if selected == 1:
                 # check account balance
-                if accIdx == 1:
-                    print("Checking Balance...")
-                    
+
+                print("Checking Balance...")
+                balanceIdx = Bank.allAccounts[accIdx - 1].rfind(",")
+                print(f"${Bank.allAccounts[accIdx - 1][balanceIdx + 1:]}")
+
             
             elif selected == 2:
                 # deposit money
@@ -77,12 +80,13 @@ class Bank:
         name = input("Please Provide A Name For The Account")
         balance = int(input("How Much Do You want To Depsoit Into The Account?  \nPlease Enter A Numeric Value No characters or symbols"))
         newAcc = Account(accId, name, 0.1, balance)
+        print(newAcc.toStr())
         self.allAccounts.append(newAcc.toStr())
         
     def searchAccount(self, accNum):
         # search for an account in the bank
+        idx = 0
         for a in self.allAccounts:
-            idx = 0
             acc = a
             commaIdx = acc.find(",")
             if accNum == acc[:commaIdx]:
@@ -130,7 +134,7 @@ class Account:
         return self.accountBalance
     
     def toStr(self):
-        return f"{self._accountNumber}, {self._accountHolderName}, {self._intrestRate}, {self._accountBalance}"
+        return f"{self._accountNumber},{self._accountHolderName},{self._intrestRate},{self._accountBalance}"
     
 class savingAccount:
     
