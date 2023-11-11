@@ -26,7 +26,7 @@ class Application:
             elif selected != 1 or selected != 2 or selected != 3:
                 print("Invaild Option Try Again")    
                 
-    def showAccountMenu(Bank, accIdx):
+    def showAccountMenu(Bank,accIdx):
         
         while True:
             
@@ -35,12 +35,19 @@ class Application:
             
             if selected == 1:
                 # check account balance
-
-                print("Checking Balance...")
-                balanceIdx = Bank.allAccounts[accIdx - 1].rfind(",")
-                print(f"${Bank.allAccounts[accIdx - 1][balanceIdx + 1:]}")
-
-            
+                if accIdx == 1:
+                    Bank.acc1.getCurrentBalance(accIdx,Bank)
+                
+                elif accIdx == 2:
+                    Bank.acc2.getCurrentBalance(accIdx,Bank)
+                    
+                elif accIdx == 3:
+                    Bank.acc3.getCurrentBalance(accIdx,Bank)
+                
+                elif accIdx >= 4:
+                    Bank.newAcc.getCurrentBalance(accIdx,Bank)
+                    
+    
             elif selected == 2:
                 # deposit money
                 depositNum = input("Enter The Amount Of Money That You Would Like To Deposit:")
@@ -65,23 +72,21 @@ class Bank:
     def __init__(self, name):
         self._bankName = name
         self.allAccounts = []
-        
-    def accounts(self):
-        acc1 = Account(1000, "Aljen", 0.1, 75000)
-        acc2 = Account(1010, "Raj", 0.1, 65000)
-        acc3 = Account(1100, "Connor", 0.1, 70000)
-        self.allAccounts.append(acc1.toStr())
-        self.allAccounts.append(acc2.toStr())
-        self.allAccounts.append(acc3.toStr())
+        self.acc1 = Account(1000, "Aljen", 0.1, 75000)
+        self.acc2 = Account(1010, "Raj", 0.1, 65000)
+        self.acc3 = Account(1100, "Connor", 0.1, 70000)
+        self.allAccounts.append(self.acc1.toStr())
+        self.allAccounts.append(self.acc2.toStr())
+        self.allAccounts.append(self.acc3.toStr())
         
     def openAccount(self):
         # open a new account
         accId = random.randint(1111,99999)
         name = input("Please Provide A Name For The Account")
         balance = int(input("How Much Do You want To Depsoit Into The Account?  \nPlease Enter A Numeric Value No characters or symbols"))
-        newAcc = Account(accId, name, 0.1, balance)
-        print(newAcc.toStr())
-        self.allAccounts.append(newAcc.toStr())
+        self.newAcc = Account(accId, name, 0.1, balance)
+        print(self.newAcc.toStr())
+        self.allAccounts.append(self.newAcc.toStr())
         
     def searchAccount(self, accNum):
         # search for an account in the bank
@@ -130,8 +135,11 @@ class Account:
     def withdraw(self,withdrawNum):
         return self.accountBalance - withdrawNum
     
-    def getCurrentBalance(self):
-        return self.accountBalance
+    def getCurrentBalance(self,accIdx,Bank):
+        
+        print("Checking Balance...")
+        balanceIdx = Bank.allAccounts[accIdx - 1].rfind(",")
+        print(f"${Bank.allAccounts[accIdx - 1][balanceIdx + 1:]}")
     
     def toStr(self):
         return f"{self._accountNumber},{self._accountHolderName},{self._intrestRate},{self._accountBalance}"
@@ -164,5 +172,4 @@ class chequingAccount:
             
 
 bank = Bank("RAJ'S BANK")
-bank.accounts()
 Application.run()
