@@ -50,8 +50,32 @@ class Application:
     
             elif selected == 2:
                 # deposit money
-                depositNum = input("Enter The Amount Of Money That You Would Like To Deposit:")
-                Account.deposit(depositNum)
+                depositNum = int(input("Enter The Amount Of Money That You Would Like To Deposit: "))
+                
+                if accIdx == 1:
+                    Bank.acc1._accountBalance = Bank.acc1.deposit(depositNum)
+                    Bank.allAccounts.pop(accIdx - 1)
+                    Bank.allAccounts.insert(accIdx - 1, Bank.acc1.toStr())
+                    
+                elif accIdx == 2:
+                    Bank.acc2._accountBalance = Bank.acc2.deposit(depositNum)
+                    Bank.allAccounts.pop(accIdx - 1)
+                    Bank.allAccounts.insert(accIdx - 1, Bank.acc2.toStr())
+                    
+                elif accIdx == 3:
+                    Bank.acc3._accountBalance = Bank.acc3.deposit(depositNum)
+                    Bank.allAccounts.pop(accIdx - 1)
+                    Bank.allAccounts.insert(accIdx - 1, Bank.acc3.toStr())
+                    
+                elif accIdx >= 4:
+                    Bank.newAcc._accountBalance = Bank.newAcc.deposit(depositNum)
+                    Bank.allAccounts.pop(accIdx - 1)
+                    Bank.allAccounts.insert(accIdx - 1, Bank.newAcc.toStr())
+                    
+        
+                else:
+                    print("Invalid input Try Again ")
+                        
             
             elif selected == 3:
             # withdraw money
@@ -75,6 +99,12 @@ class Bank:
         self.acc1 = Account(1000, "Aljen", 0.1, 75000)
         self.acc2 = Account(1010, "Raj", 0.1, 65000)
         self.acc3 = Account(1100, "Connor", 0.1, 70000)
+        self.saving1 = savingAccount(5000)
+        self.saving2 = savingAccount(4000)
+        self.saving3 = savingAccount(4500)
+        self.chequing1 = chequingAccount(2500)
+        self.chequing2 = chequingAccount(1500)
+        self.chequing3 = chequingAccount(2000)
         self.allAccounts.append(self.acc1.toStr())
         self.allAccounts.append(self.acc2.toStr())
         self.allAccounts.append(self.acc3.toStr())
@@ -82,8 +112,8 @@ class Bank:
     def openAccount(self):
         # open a new account
         accId = random.randint(1111,99999)
-        name = input("Please Provide A Name For The Account")
-        balance = int(input("How Much Do You want To Depsoit Into The Account?  \nPlease Enter A Numeric Value No characters or symbols"))
+        name = input("Please Provide A Name For The Account: ")
+        balance = int(input("How Much Do You want To Depsoit Into The Account?  \nPlease Enter A Numeric Value No characters or symbols: "))
         self.newAcc = Account(accId, name, 0.1, balance)
         print(self.newAcc.toStr())
         self.allAccounts.append(self.newAcc.toStr())
@@ -130,7 +160,8 @@ class Account:
         self._intrestRate = newIntrest
         
     def deposit(self, depositNum):
-        return self.accountBalance + depositNum
+        print(f"Your New Balance is ${self._accountBalance + depositNum}")
+        return self._accountBalance + depositNum
     
     def withdraw(self,withdrawNum):
         return self.accountBalance - withdrawNum
