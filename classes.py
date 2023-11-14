@@ -50,31 +50,39 @@ class Application:
     
             elif selected == 2:
                 # deposit money
-                depositNum = int(input("Enter The Amount Of Money That You Would Like To Deposit: "))
+                while True:
+                    
+                    depositNum = int(input("Enter The Amount Of Money That You Would Like To Deposit: "))
+                    
+                    if depositNum >= 0:
+                        if accIdx == 1:
+                            Bank.acc1._accountBalance = Bank.acc1.deposit(depositNum)
+                            Bank.allAccounts.pop(accIdx - 1)
+                            Bank.allAccounts.insert(accIdx - 1, Bank.acc1.toStr())
+                        
+                        elif accIdx == 2:
+                            Bank.acc2._accountBalance = Bank.acc2.deposit(depositNum)
+                            Bank.allAccounts.pop(accIdx - 1)
+                            Bank.allAccounts.insert(accIdx - 1, Bank.acc2.toStr())
+                            
+                        elif accIdx == 3:
+                            Bank.acc3._accountBalance = Bank.acc3.deposit(depositNum)
+                            Bank.allAccounts.pop(accIdx - 1)
+                            Bank.allAccounts.insert(accIdx - 1, Bank.acc3.toStr())
+                            
+                        elif accIdx >= 4:
+                            Bank.newAcc._accountBalance = Bank.newAcc.deposit(depositNum)
+                            Bank.allAccounts.pop(accIdx - 1)
+                            Bank.allAccounts.insert(accIdx - 1, Bank.newAcc.toStr())
+                            
                 
-                if accIdx == 1:
-                    Bank.acc1._accountBalance = Bank.acc1.deposit(depositNum)
-                    Bank.allAccounts.pop(accIdx - 1)
-                    Bank.allAccounts.insert(accIdx - 1, Bank.acc1.toStr())
+                        else:
+                            print("Invalid input Try Again ")
                     
-                elif accIdx == 2:
-                    Bank.acc2._accountBalance = Bank.acc2.deposit(depositNum)
-                    Bank.allAccounts.pop(accIdx - 1)
-                    Bank.allAccounts.insert(accIdx - 1, Bank.acc2.toStr())
+                    else:
+                        print("You Can't Enter Negative Values. Please Try Again.")
+                
                     
-                elif accIdx == 3:
-                    Bank.acc3._accountBalance = Bank.acc3.deposit(depositNum)
-                    Bank.allAccounts.pop(accIdx - 1)
-                    Bank.allAccounts.insert(accIdx - 1, Bank.acc3.toStr())
-                    
-                elif accIdx >= 4:
-                    Bank.newAcc._accountBalance = Bank.newAcc.deposit(depositNum)
-                    Bank.allAccounts.pop(accIdx - 1)
-                    Bank.allAccounts.insert(accIdx - 1, Bank.newAcc.toStr())
-                    
-        
-                else:
-                    print("Invalid input Try Again ")
                         
             
             elif selected == 3:
