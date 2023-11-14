@@ -59,73 +59,87 @@ class Application:
                             Bank.acc1._accountBalance = Bank.acc1.deposit(depositNum)
                             Bank.allAccounts.pop(accIdx - 1)
                             Bank.allAccounts.insert(accIdx - 1, Bank.acc1.toStr())
+                            break
                         
                         elif accIdx == 2:
                             Bank.acc2._accountBalance = Bank.acc2.deposit(depositNum)
                             Bank.allAccounts.pop(accIdx - 1)
                             Bank.allAccounts.insert(accIdx - 1, Bank.acc2.toStr())
-                            
+                            break
                         elif accIdx == 3:
                             Bank.acc3._accountBalance = Bank.acc3.deposit(depositNum)
                             Bank.allAccounts.pop(accIdx - 1)
                             Bank.allAccounts.insert(accIdx - 1, Bank.acc3.toStr())
-                            
+                            break
                         elif accIdx >= 4:
                             Bank.newAcc._accountBalance = Bank.newAcc.deposit(depositNum)
                             Bank.allAccounts.pop(accIdx - 1)
                             Bank.allAccounts.insert(accIdx - 1, Bank.newAcc.toStr())
-                            
+                            break
                 
                         else:
                             print("Invalid input Try Again ")
                     
                     else:
                         print("You Can't Enter Negative Values. Please Try Again.")
-                
-                    
+                   
                         
             
             elif selected == 3:
             # withdraw money
                 while True:
-                    withdrawNum = input("Enter How Much Money You Would Like To Take Out: ")
-                    accSelected = input("Which account would you like to withdraw money from?\n1 for savings or 2 for chequings")
-                    if accSelected == 1:
-                        if withdrawNum >= 0:
+                    withdrawNum = int(input("Enter How Much Money You Would Like To Take Out: "))
+                    accSelected = int(input("Which account would you like to withdraw money from?\n1 for savings or 2 for chequings"))
+                    if withdrawNum >= 0:
+                        
+                        if accSelected == 1:
+                        
                             if accIdx == 1:
-                                Bank.acc1._accountBalance = Bank.saving1.withdraw(withdrawNum)
+                                Bank.acc1._accountBalance = Bank.saving1.withdraw(withdrawNum,Bank.acc1)
                                 Bank.allAccounts.pop(accIdx - 1)
                                 Bank.allAccounts.insert(accIdx - 1, Bank.acc1.toStr())
-                            
+                                break
                             elif accIdx == 2:
-                                Bank.acc2._accountBalance = Bank.saving2.withdraw(withdrawNum)
+                                Bank.acc2._accountBalance = Bank.saving2.withdraw(withdrawNum, Bank.acc2)
                                 Bank.allAccounts.pop(accIdx - 1)
                                 Bank.allAccounts.insert(accIdx - 1, Bank.acc2.toStr())
-                                
+                                break
                             elif accIdx == 3:
-                                Bank.acc3._accountBalance = Bank.saving3.withdraw(withdrawNum)
+                                Bank.acc3._accountBalance = Bank.saving3.withdraw(withdrawNum,Bank.acc3)
                                 Bank.allAccounts.pop(accIdx - 1)
                                 Bank.allAccounts.insert(accIdx - 1, Bank.acc3.toStr())
-                                
+                                break
                             elif accIdx >= 4:
-                                Bank.newAcc._accountBalance = Bank.newSaving.withdraw(withdrawNum)
+                                Bank.newAcc._accountBalance = Bank.newSaving.withdraw(withdrawNum,Bank.newAcc)
                                 Bank.allAccounts.pop(accIdx - 1)
                                 Bank.allAccounts.insert(accIdx - 1, Bank.newAcc.toStr())
-                                
-                    
-                            else:
-                                print("Invalid input Try Again ")
-                        
-                        else:
-                            print("You Can't Enter Negative Values. Please Try Again.")
-                        
-                        
+                                break
                     
                         
-                    elif accSelected == 2:
-                        pass
+                        elif accSelected == 2:
+                            if accIdx == 1:
+                                Bank.acc1._accountBalance = Bank.chequing1.withdraw(withdrawNum,Bank.acc1)
+                                Bank.allAccounts.pop(accIdx - 1)
+                                Bank.allAccounts.insert(accIdx - 1, Bank.acc1.toStr())
+                                break
+                            elif accIdx == 2:
+                                Bank.acc2._accountBalance = Bank.chequing2.withdraw(withdrawNum,Bank.acc2)
+                                Bank.allAccounts.pop(accIdx - 1)
+                                Bank.allAccounts.insert(accIdx - 1, Bank.acc2.toStr())
+                                break
+                            elif accIdx == 3:
+                                Bank.acc3._accountBalance = Bank.chequing3.withdraw(withdrawNum, Bank.acc3)
+                                Bank.allAccounts.pop(accIdx - 1)
+                                Bank.allAccounts.insert(accIdx - 1, Bank.acc3.toStr())
+                                break
+                            elif accIdx >= 4:
+                                Bank.newAcc._accountBalance = Bank.newChequing.withdraw(withdrawNum,Bank.newAcc)
+                                Bank.allAccounts.pop(accIdx - 1)
+                                Bank.allAccounts.insert(accIdx - 1, Bank.newAcc.toStr())
+                                break
+                    
                     else:
-                        print("Invaild input try again")
+                            print("You Can't Enter Negative Values. Please Try Again.")
 
                     
                 
@@ -216,7 +230,7 @@ class Account:
         return self._accountBalance + depositNum
     
     def withdraw(self,withdrawNum):
-        return self.accountBalance - withdrawNum
+        return self._accountBalance - withdrawNum
     
     def getCurrentBalance(self,accIdx,Bank):
         
@@ -232,8 +246,8 @@ class savingAccount:
     def __init__(self,minBalance):
         self._minimumBalance = minBalance
         
-    def withdraw(self, withdrawNum):
-        if Account.getCurrentBalance() - withdrawNum < self._minimumBalance:
+    def withdraw(self, withdrawNum,Account):
+        if Account._accountBalance - withdrawNum < self._minimumBalance:
             print("Sorry! You cannot withdraw that amount")
             
         else:
@@ -245,8 +259,8 @@ class chequingAccount:
     def __init__(self,overDraft):
         self._overDraftLimit = overDraft 
         
-    def withdraw(self, withdrawNum):
-        if (Account.getCurrentBalance() + self._overDraftLimit) - withdrawNum < 0:
+    def withdraw(self, withdrawNum, Account):
+        if (Account._accountBalance + self._overDraftLimit) - withdrawNum < 0:
             print("Sorry! You do not have enough money in your account to cover this transaction.")
         
         else:
