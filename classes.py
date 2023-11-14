@@ -87,7 +87,49 @@ class Application:
             
             elif selected == 3:
             # withdraw money
-                withdrawNum = input("Enter How Much Money You Would Like To Take Out:")
+                while True:
+                    withdrawNum = input("Enter How Much Money You Would Like To Take Out: ")
+                    accSelected = input("Which account would you like to withdraw money from?\n1 for savings or 2 for chequings")
+                    if accSelected == 1:
+                        if withdrawNum >= 0:
+                            if accIdx == 1:
+                                Bank.acc1._accountBalance = Bank.saving1.withdraw(withdrawNum)
+                                Bank.allAccounts.pop(accIdx - 1)
+                                Bank.allAccounts.insert(accIdx - 1, Bank.acc1.toStr())
+                            
+                            elif accIdx == 2:
+                                Bank.acc2._accountBalance = Bank.saving2.withdraw(withdrawNum)
+                                Bank.allAccounts.pop(accIdx - 1)
+                                Bank.allAccounts.insert(accIdx - 1, Bank.acc2.toStr())
+                                
+                            elif accIdx == 3:
+                                Bank.acc3._accountBalance = Bank.saving3.withdraw(withdrawNum)
+                                Bank.allAccounts.pop(accIdx - 1)
+                                Bank.allAccounts.insert(accIdx - 1, Bank.acc3.toStr())
+                                
+                            elif accIdx >= 4:
+                                Bank.newAcc._accountBalance = Bank.newSaving.withdraw(withdrawNum)
+                                Bank.allAccounts.pop(accIdx - 1)
+                                Bank.allAccounts.insert(accIdx - 1, Bank.newAcc.toStr())
+                                
+                    
+                            else:
+                                print("Invalid input Try Again ")
+                        
+                        else:
+                            print("You Can't Enter Negative Values. Please Try Again.")
+                        
+                        
+                    
+                        
+                    elif accSelected == 2:
+                        pass
+                    else:
+                        print("Invaild input try again")
+
+                    
+                
+                
             elif selected == 4:
                 # leave main menu
                 break
@@ -123,6 +165,8 @@ class Bank:
         name = input("Please Provide A Name For The Account: ")
         balance = int(input("How Much Do You want To Depsoit Into The Account?  \nPlease Enter A Numeric Value No characters or symbols: "))
         self.newAcc = Account(accId, name, 0.1, balance)
+        self.newSaving = savingAccount(4000)
+        self.newChequing = chequingAccount(2000)
         print(self.newAcc.toStr())
         self.allAccounts.append(self.newAcc.toStr())
         
