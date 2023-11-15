@@ -10,8 +10,10 @@ class Application:
             if selected == 1:
                 accNum = str(input("Enter Account Number: "))
                 accFound = bank.searchAccount(accNum)
+                
                 if accFound == False:
-                    print(f"No account found related to {accNum}")       
+                    print(f"No account found related to {accNum}")
+                           
                 else:
                     print("Account Found\nPlease Wait")
                     Application.showAccountMenu(bank,accFound)
@@ -19,6 +21,7 @@ class Application:
             elif selected == 2:
                 # call account class
                 bank.openAccount()
+                
             elif selected == 3:
                 # leave main menu
                 break
@@ -30,7 +33,6 @@ class Application:
         
         while True:
             
-
             selected = int(input(f"What Would You Like To Do?\nCheck Balance: 1\nDeposit: 2\nWithdraw: 3\nExit: 4\n"))
             
             if selected == 1:
@@ -66,11 +68,13 @@ class Application:
                             Bank.allAccounts.pop(accIdx - 1)
                             Bank.allAccounts.insert(accIdx - 1, Bank.acc2.toStr())
                             break
+                        
                         elif accIdx == 3:
                             Bank.acc3._accountBalance = Bank.acc3.deposit(depositNum)
                             Bank.allAccounts.pop(accIdx - 1)
                             Bank.allAccounts.insert(accIdx - 1, Bank.acc3.toStr())
                             break
+                        
                         elif accIdx >= 4:
                             Bank.newAcc._accountBalance = Bank.newAcc.deposit(depositNum)
                             Bank.allAccounts.pop(accIdx - 1)
@@ -99,23 +103,25 @@ class Application:
                                 Bank.allAccounts.pop(accIdx - 1)
                                 Bank.allAccounts.insert(accIdx - 1, Bank.acc1.toStr())
                                 break
+                            
                             elif accIdx == 2:
                                 Bank.acc2._accountBalance = Bank.saving2.withdraw(withdrawNum, Bank.acc2)
                                 Bank.allAccounts.pop(accIdx - 1)
                                 Bank.allAccounts.insert(accIdx - 1, Bank.acc2.toStr())
                                 break
+                            
                             elif accIdx == 3:
                                 Bank.acc3._accountBalance = Bank.saving3.withdraw(withdrawNum,Bank.acc3)
                                 Bank.allAccounts.pop(accIdx - 1)
                                 Bank.allAccounts.insert(accIdx - 1, Bank.acc3.toStr())
                                 break
+                            
                             elif accIdx >= 4:
                                 Bank.newAcc._accountBalance = Bank.newSaving.withdraw(withdrawNum,Bank.newAcc)
                                 Bank.allAccounts.pop(accIdx - 1)
                                 Bank.allAccounts.insert(accIdx - 1, Bank.newAcc.toStr())
                                 break
                     
-                        
                         elif accSelected == 2:
                             if accIdx == 1:
                                 Bank.acc1._accountBalance = Bank.chequing1.withdraw(withdrawNum,Bank.acc1)
@@ -124,16 +130,19 @@ class Application:
                                 Bank.allAccounts.insert(accIdx - 1, Bank.acc1.toStr())
                                 print(Bank.allAccounts)
                                 break
+                            
                             elif accIdx == 2:
                                 Bank.acc2._accountBalance = Bank.chequing2.withdraw(withdrawNum,Bank.acc2)
                                 Bank.allAccounts.pop(accIdx - 1)
                                 Bank.allAccounts.insert(accIdx - 1, Bank.acc2.toStr())
                                 break
+                            
                             elif accIdx == 3:
                                 Bank.acc3._accountBalance = Bank.chequing3.withdraw(withdrawNum, Bank.acc3)
                                 Bank.allAccounts.pop(accIdx - 1)
                                 Bank.allAccounts.insert(accIdx - 1, Bank.acc3.toStr())
                                 break
+                            
                             elif accIdx >= 4:
                                 Bank.newAcc._accountBalance = Bank.newChequing.withdraw(withdrawNum,Bank.newAcc)
                                 Bank.allAccounts.pop(accIdx - 1)
@@ -143,9 +152,6 @@ class Application:
                     else:
                             print("You Can't Enter Negative Values. Please Try Again.")
 
-                    
-                
-                
             elif selected == 4:
                 # leave main menu
                 break
@@ -190,10 +196,14 @@ class Bank:
         # search for an account in the bank
         idx = 0
         for a in self.allAccounts:
+            
             acc = a
+            
             commaIdx = acc.find(",")
+            
             if accNum == acc[:commaIdx]:
                 return idx + 1
+            
             else:
                 idx += 1
                 
@@ -250,10 +260,13 @@ class savingAccount:
         self._minimumBalance = minBalance
         
     def withdraw(self, withdrawNum,Account):
+        
         print(Account._accountBalance)
         print(withdrawNum)
+        
         if Account._accountBalance - withdrawNum < self._minimumBalance:
             print("Sorry! You cannot withdraw that amount")
+            return Account._accountBalance
             
         else:
             Account._accountBalance = Account.withdraw(withdrawNum)
@@ -268,6 +281,7 @@ class chequingAccount:
     def withdraw(self, withdrawNum, Account):
         if (Account._accountBalance + self._overDraftLimit) - withdrawNum < 0:
             print("Sorry! You do not have enough money in your account to cover this transaction.")
+            return Account._accountBalance
         
         else:
             Account._accountBalance = Account.withdraw(withdrawNum)
