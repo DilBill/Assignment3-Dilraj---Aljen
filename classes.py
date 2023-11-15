@@ -120,7 +120,9 @@ class Application:
                             if accIdx == 1:
                                 Bank.acc1._accountBalance = Bank.chequing1.withdraw(withdrawNum,Bank.acc1)
                                 Bank.allAccounts.pop(accIdx - 1)
+                                print(Bank.allAccounts)
                                 Bank.allAccounts.insert(accIdx - 1, Bank.acc1.toStr())
+                                print(Bank.allAccounts)
                                 break
                             elif accIdx == 2:
                                 Bank.acc2._accountBalance = Bank.chequing2.withdraw(withdrawNum,Bank.acc2)
@@ -230,6 +232,7 @@ class Account:
         return self._accountBalance + depositNum
     
     def withdraw(self,withdrawNum):
+        print(f"Your New Balance is ${self._accountBalance - withdrawNum}")
         return self._accountBalance - withdrawNum
     
     def getCurrentBalance(self,accIdx,Bank):
@@ -247,12 +250,15 @@ class savingAccount:
         self._minimumBalance = minBalance
         
     def withdraw(self, withdrawNum,Account):
+        print(Account._accountBalance)
+        print(withdrawNum)
         if Account._accountBalance - withdrawNum < self._minimumBalance:
             print("Sorry! You cannot withdraw that amount")
             
         else:
-            Account.withdraw(withdrawNum)
+            Account._accountBalance = Account.withdraw(withdrawNum)
             print("transication complete")
+            return Account._accountBalance
     
 class chequingAccount:
     
@@ -264,8 +270,10 @@ class chequingAccount:
             print("Sorry! You do not have enough money in your account to cover this transaction.")
         
         else:
-            Account.withdraw(withdrawNum)
+            Account._accountBalance = Account.withdraw(withdrawNum)
             print("Transaction Complete")
+            return Account._accountBalance 
+    
             
 
 bank = Bank("RAJ'S BANK")
