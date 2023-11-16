@@ -5,7 +5,7 @@ class Application:
         
         while True:
             
-            selected = int(input(f"What Would You Like To Do?\nSelect Account: 1\nOpen Account: 2\nExit: 3\n"))
+            selected = int(input("What Would You Like To Do?\nSelect Account: 1\nOpen Account: 2\nExit: 3\n"))
             
             if selected == 1:
                 accNum = str(input("Enter Account Number: "))
@@ -162,7 +162,6 @@ class Application:
     def run():
         Application.showMainMenu()
         
-
 class Bank:
     
     def __init__(self, name):
@@ -183,7 +182,7 @@ class Bank:
         
     def openAccount(self):
         # open a new account
-        accId = random.randint(1111,99999)
+        accId = random.randint(11111,99999)
         name = input("Please Provide A Name For The Account: ")
         balance = int(input("How Much Do You want To Depsoit Into The Account?  \nPlease Enter A Numeric Value No characters or symbols: "))
         self.newAcc = Account(accId, name, 0.1, balance)
@@ -209,9 +208,6 @@ class Bank:
                 
       
         return False
-        
-        
-        
         
 class Account:
     
