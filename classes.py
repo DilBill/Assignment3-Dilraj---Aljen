@@ -1,163 +1,176 @@
 import random
+import os
+
 class Application:
     
     def showMainMenu():
-        
-        while True:
-            
-            selected = int(input("What Would You Like To Do?\nSelect Account: 1\nOpen Account: 2\nExit: 3\n"))
-            
-            if selected == 1:
-                accNum = str(input("Enter Account Number: "))
-                accFound = bank.searchAccount(accNum)
-                
-                if accFound == False:
-                    print(f"No account found related to {accNum}")
-                           
-                else:
-                    print("Account Found\nPlease Wait")
-                    Application.showAccountMenu(bank,accFound)
-            
-            elif selected == 2:
-                # call account class
-                bank.openAccount()
-                
-            elif selected == 3:
-                # leave main menu
-                break
-                
-            elif selected != 1 or selected != 2 or selected != 3:
-                print("Invaild Option Try Again")    
+            while True:
+                os.system("cls")
+                print("Welcome to the Raj's Bank!")
+                try:
+                    selected = int(input("What Would You Like To Do?\nSelect Account: 1\nOpen Account: 2\nExit: 3\n"))
+                    
+                    if selected == 1:
+                        while True:
+                            try:
+                                accNum = str(input("Enter Account Number: "))
+                                accFound = bank.searchAccount(accNum)
+                                
+                                if accFound is False:
+                                    print(f"No account found related to {accNum}")
+                                        
+                                else:
+                                    print("Account Found\nPlease Wait")
+                                    #print("Account Name:", Account.getAccountHolderName) code doesnt work, make sure it prints out account name here
+                                    Application.showAccountMenu(bank,accFound)
+                                    break
+                            except Exception as bigException:
+                                print("Error: Invalid Input ", bigException)
+                    
+                    elif selected == 2:
+                        # call account class
+                        bank.openAccount()
+                        
+                    elif selected == 3:
+                        # leave main menu
+                        break
+                        
+                    elif selected != 1 or selected != 2 or selected != 3:
+                        print("Invaild Option Try Again")  
+
+                except Exception as bigException:
+                    print("Error: Invalid Input ", bigException)
                 
     def showAccountMenu(Bank,accIdx):
-        
-        while True:
-            
-            selected = int(input(f"What Would You Like To Do?\nCheck Balance: 1\nDeposit: 2\nWithdraw: 3\nExit: 4\n"))
-            
-            if selected == 1:
-                # check account balance
-                if accIdx == 1:
-                    Bank.acc1.getCurrentBalance(accIdx,Bank)
+            while True:
+                try:
+                    selected = int(input("What Would You Like To Do?\nCheck Balance: 1\nDeposit: 2\nWithdraw: 3\nExit: 4\n"))
                 
-                elif accIdx == 2:
-                    Bank.acc2.getCurrentBalance(accIdx,Bank)
-                    
-                elif accIdx == 3:
-                    Bank.acc3.getCurrentBalance(accIdx,Bank)
-                
-                elif accIdx >= 4:
-                    Bank.newAcc.getCurrentBalance(accIdx,Bank)
-                    
-    
-            elif selected == 2:
-                # deposit money
-                while True:
-                    
-                    depositNum = int(input("Enter The Amount Of Money That You Would Like To Deposit: "))
-                    
-                    if depositNum >= 0:
+                    if selected == 1:
+                        # check account balance
                         if accIdx == 1:
-                            Bank.acc1._accountBalance = Bank.acc1.deposit(depositNum)
-                            Bank.allAccounts.pop(accIdx - 1)
-                            Bank.allAccounts.insert(accIdx - 1, Bank.acc1.toStr())
-                            break
+                            Bank.acc1.getCurrentBalance(accIdx,Bank)
                         
                         elif accIdx == 2:
-                            Bank.acc2._accountBalance = Bank.acc2.deposit(depositNum)
-                            Bank.allAccounts.pop(accIdx - 1)
-                            Bank.allAccounts.insert(accIdx - 1, Bank.acc2.toStr())
-                            break
-                        
+                            Bank.acc2.getCurrentBalance(accIdx,Bank)
+                            
                         elif accIdx == 3:
-                            Bank.acc3._accountBalance = Bank.acc3.deposit(depositNum)
-                            Bank.allAccounts.pop(accIdx - 1)
-                            Bank.allAccounts.insert(accIdx - 1, Bank.acc3.toStr())
-                            break
+                            Bank.acc3.getCurrentBalance(accIdx,Bank)
                         
                         elif accIdx >= 4:
-                            Bank.newAcc._accountBalance = Bank.newAcc.deposit(depositNum)
-                            Bank.allAccounts.pop(accIdx - 1)
-                            Bank.allAccounts.insert(accIdx - 1, Bank.newAcc.toStr())
-                            break
-                
-                        else:
-                            print("Invalid input Try Again ")
-                    
-                    else:
-                        print("You Can't Enter Negative Values. Please Try Again.")
-                   
-                        
+                            Bank.newAcc.getCurrentBalance(accIdx,Bank)
+                            
             
-            elif selected == 3:
-            # withdraw money
-                while True:
-                    withdrawNum = int(input("Enter How Much Money You Would Like To Take Out: "))
-                    accSelected = int(input("Which account would you like to withdraw money from?\n1 for savings or 2 for chequings"))
-                    if withdrawNum >= 0:
+                    elif selected == 2:
+                        # deposit money
+                        while True:
+                            
+                            depositNum = int(input("Enter The Amount Of Money That You Would Like To Deposit: "))
+                            
+                            if depositNum >= 0:
+                                if accIdx == 1:
+                                    Bank.acc1._accountBalance = Bank.acc1.deposit(depositNum)
+                                    Bank.allAccounts.pop(accIdx - 1)
+                                    Bank.allAccounts.insert(accIdx - 1, Bank.acc1.toStr())
+                                    break
+                                
+                                elif accIdx == 2:
+                                    Bank.acc2._accountBalance = Bank.acc2.deposit(depositNum)
+                                    Bank.allAccounts.pop(accIdx - 1)
+                                    Bank.allAccounts.insert(accIdx - 1, Bank.acc2.toStr())
+                                    break
+                                
+                                elif accIdx == 3:
+                                    Bank.acc3._accountBalance = Bank.acc3.deposit(depositNum)
+                                    Bank.allAccounts.pop(accIdx - 1)
+                                    Bank.allAccounts.insert(accIdx - 1, Bank.acc3.toStr())
+                                    break
+                                
+                                elif accIdx >= 4:
+                                    Bank.newAcc._accountBalance = Bank.newAcc.deposit(depositNum)
+                                    Bank.allAccounts.pop(accIdx - 1)
+                                    Bank.allAccounts.insert(accIdx - 1, Bank.newAcc.toStr())
+                                    break
                         
-                        if accSelected == 1:
+                                else:
+                                    print("Invalid input Try Again ")
+                            
+                            else:
+                                print("You Can't Enter Negative Values. Please Try Again.")
                         
-                            if accIdx == 1:
-                                Bank.acc1._accountBalance = Bank.saving1.withdraw(withdrawNum,Bank.acc1)
-                                Bank.allAccounts.pop(accIdx - 1)
-                                Bank.allAccounts.insert(accIdx - 1, Bank.acc1.toStr())
-                                break
-                            
-                            elif accIdx == 2:
-                                Bank.acc2._accountBalance = Bank.saving2.withdraw(withdrawNum, Bank.acc2)
-                                Bank.allAccounts.pop(accIdx - 1)
-                                Bank.allAccounts.insert(accIdx - 1, Bank.acc2.toStr())
-                                break
-                            
-                            elif accIdx == 3:
-                                Bank.acc3._accountBalance = Bank.saving3.withdraw(withdrawNum,Bank.acc3)
-                                Bank.allAccounts.pop(accIdx - 1)
-                                Bank.allAccounts.insert(accIdx - 1, Bank.acc3.toStr())
-                                break
-                            
-                            elif accIdx >= 4:
-                                Bank.newAcc._accountBalance = Bank.newSaving.withdraw(withdrawNum,Bank.newAcc)
-                                Bank.allAccounts.pop(accIdx - 1)
-                                Bank.allAccounts.insert(accIdx - 1, Bank.newAcc.toStr())
-                                break
+                                
                     
-                        elif accSelected == 2:
-                            if accIdx == 1:
-                                Bank.acc1._accountBalance = Bank.chequing1.withdraw(withdrawNum,Bank.acc1)
-                                Bank.allAccounts.pop(accIdx - 1)
-                                print(Bank.allAccounts)
-                                Bank.allAccounts.insert(accIdx - 1, Bank.acc1.toStr())
-                                print(Bank.allAccounts)
-                                break
+                    elif selected == 3:
+                    # withdraw money
+                        while True:
+                            withdrawNum = int(input("Enter How Much Money You Would Like To Take Out: "))
+                            accSelected = int(input("Which account would you like to withdraw money from?\n1 for savings or 2 for chequings: "))
+                            if withdrawNum > 0:
+                                
+                                if accSelected == 1:
+                                
+                                    if accIdx == 1:
+                                        Bank.acc1._accountBalance = Bank.saving1.withdraw(withdrawNum,Bank.acc1)
+                                        Bank.allAccounts.pop(accIdx - 1)
+                                        Bank.allAccounts.insert(accIdx - 1, Bank.acc1.toStr())
+                                        break
+                                    
+                                    elif accIdx == 2:
+                                        Bank.acc2._accountBalance = Bank.saving2.withdraw(withdrawNum, Bank.acc2)
+                                        Bank.allAccounts.pop(accIdx - 1)
+                                        Bank.allAccounts.insert(accIdx - 1, Bank.acc2.toStr())
+                                        break
+                                    
+                                    elif accIdx == 3:
+                                        Bank.acc3._accountBalance = Bank.saving3.withdraw(withdrawNum,Bank.acc3)
+                                        Bank.allAccounts.pop(accIdx - 1)
+                                        Bank.allAccounts.insert(accIdx - 1, Bank.acc3.toStr())
+                                        break
+                                    
+                                    elif accIdx >= 4:
+                                        Bank.newAcc._accountBalance = Bank.newSaving.withdraw(withdrawNum,Bank.newAcc)
+                                        Bank.allAccounts.pop(accIdx - 1)
+                                        Bank.allAccounts.insert(accIdx - 1, Bank.newAcc.toStr())
+                                        break
                             
-                            elif accIdx == 2:
-                                Bank.acc2._accountBalance = Bank.chequing2.withdraw(withdrawNum,Bank.acc2)
-                                Bank.allAccounts.pop(accIdx - 1)
-                                Bank.allAccounts.insert(accIdx - 1, Bank.acc2.toStr())
-                                break
+                                elif accSelected == 2:
+                                    if accIdx == 1:
+                                        Bank.acc1._accountBalance = Bank.chequing1.withdraw(withdrawNum,Bank.acc1)
+                                        Bank.allAccounts.pop(accIdx - 1)
+                                        print(Bank.allAccounts)
+                                        Bank.allAccounts.insert(accIdx - 1, Bank.acc1.toStr())
+                                        print(Bank.allAccounts)
+                                        break
+                                    
+                                    elif accIdx == 2:
+                                        Bank.acc2._accountBalance = Bank.chequing2.withdraw(withdrawNum,Bank.acc2)
+                                        Bank.allAccounts.pop(accIdx - 1)
+                                        Bank.allAccounts.insert(accIdx - 1, Bank.acc2.toStr())
+                                        break
+                                    
+                                    elif accIdx == 3:
+                                        Bank.acc3._accountBalance = Bank.chequing3.withdraw(withdrawNum, Bank.acc3)
+                                        Bank.allAccounts.pop(accIdx - 1)
+                                        Bank.allAccounts.insert(accIdx - 1, Bank.acc3.toStr())
+                                        break
+                                    
+                                    elif accIdx >= 4:
+                                        Bank.newAcc._accountBalance = Bank.newChequing.withdraw(withdrawNum,Bank.newAcc)
+                                        Bank.allAccounts.pop(accIdx - 1)
+                                        Bank.allAccounts.insert(accIdx - 1, Bank.newAcc.toStr())
+                                        break
                             
-                            elif accIdx == 3:
-                                Bank.acc3._accountBalance = Bank.chequing3.withdraw(withdrawNum, Bank.acc3)
-                                Bank.allAccounts.pop(accIdx - 1)
-                                Bank.allAccounts.insert(accIdx - 1, Bank.acc3.toStr())
-                                break
-                            
-                            elif accIdx >= 4:
-                                Bank.newAcc._accountBalance = Bank.newChequing.withdraw(withdrawNum,Bank.newAcc)
-                                Bank.allAccounts.pop(accIdx - 1)
-                                Bank.allAccounts.insert(accIdx - 1, Bank.newAcc.toStr())
-                                break
-                    
-                    else:
-                            print("You Can't Enter Negative Values. Please Try Again.")
+                            else:
+                                    print("You Can't Enter Negative Values. Please Try Again.")
 
-            elif selected == 4:
-                # leave main menu
-                break
-                
-            elif selected != 1 or selected != 2 or selected != 3 or selected != 4:
-                print("Invaild Option Try Again")
+                    elif selected == 4:
+                        # leave main menu
+                        break
+                        
+                    elif selected != 1 or selected != 2 or selected != 3 or selected != 4:
+                        print("Invaild Option Try Again")
+                except Exception as bigExcepetion:
+                    print("Error: input is invalid. ", bigExcepetion)
             
     def run():
         Application.showMainMenu()
@@ -183,8 +196,20 @@ class Bank:
     def openAccount(self):
         # open a new account
         accId = random.randint(11111,99999)
-        name = input("Please Provide A Name For The Account: ")
-        balance = int(input("How Much Do You want To Depsoit Into The Account?  \nPlease Enter A Numeric Value No characters or symbols: "))
+        while True:
+            try:
+                name = input("Please Provide A Name For The Account: ")
+                if name.isalpha():
+                     balance = int(input("How Much Do You want To Depsoit Into The Account?: "))
+                    ##check if balance is valid
+                     if balance >= 0:
+                         break
+                     else:
+                         raise Exception("Invalid input")
+                else:
+                    raise Exception("Name must be alphabetical")
+            except Exception as bigExcepetion:
+                print("Error: input is invalid. ", bigExcepetion)
         self.newAcc = Account(accId, name, 0.1, balance)
         self.newSaving = savingAccount(4000)
         self.newChequing = chequingAccount(2000)
@@ -284,7 +309,5 @@ class chequingAccount:
             print("Transaction Complete")
             return Account._accountBalance 
     
-            
-
 bank = Bank("RAJ'S BANK")
 Application.run()
