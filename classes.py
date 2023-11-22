@@ -1,11 +1,9 @@
 import random
-import os
 
 class Application:
     
     def showMainMenu():
             while True:
-                os.system("cls")
                 print("Welcome to the Raj's Bank!")
                 try:
                     selected = int(input("What Would You Like To Do?\nSelect Account: 1\nOpen Account: 2\nExit: 3\n"))
