@@ -135,9 +135,7 @@ class Application:
                                     if accIdx == 1:
                                         Bank.acc1._accountBalance = Bank.chequing1.withdraw(withdrawNum,Bank.acc1)
                                         Bank.allAccounts.pop(accIdx - 1)
-                                        print(Bank.allAccounts)
                                         Bank.allAccounts.insert(accIdx - 1, Bank.acc1.toStr())
-                                        print(Bank.allAccounts)
                                         break
                                     
                                     elif accIdx == 2:
